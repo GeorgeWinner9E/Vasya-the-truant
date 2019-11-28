@@ -1,46 +1,25 @@
 <html>
 
 <head>
-<link rel="stylesheet" type="text/css" href="truant_style.css">
+<link rel="stylesheet"  href="Vasya-the-truant/truant_style.css">
+<meta charset="UTF-8">
+<title>Прогульщик Вася</title>
+  <style>
+   body {
+    background: lightblue; /* Цвет фона */
+    /* color: #fc0; /* Цвет текста */
+   }
+  </style>
+
 </head>
 
 
-<?php
-
-if( isset( $_POST['Start'] ) )  #при нажатии кнопки перейти к тесту
-        include 'test_truant.php'
-
-
-?>
-
-
-
-
-<datalist id="rangeList1">
-<option value="-5" label="-5">
-<option value="0" label="0">
-<option value="5" label="5">
-</datalist>
-
-<input type="range" min="-5" max="5" list="rangeList1">
-
-
-</br>
-
-
-<div class="container">
-<div>
-    <p>Вася постоянно опаздывает. Взаимодействуй с ним и смотри че происходит</p>
-    <p>Жмакай старт если фсё понял</a>.</p>
-    <form method="POST">
-    <input type="submit" name="Start" value="Начать" />
-    </form>
-
+<div class=container>
+    <p>Вася постоянно опаздывает. Взаимодействуй с ним и смотри что происходит... Жми на старт и вперед!</a>.</p>
 </div>
+<button>Начать</button>
 
-</div>
-    
-
+<script src="Vasya-the-truant/truant_script.js"></script>
 
 
 </html>
