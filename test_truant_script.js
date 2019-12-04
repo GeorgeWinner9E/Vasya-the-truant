@@ -29,7 +29,10 @@ random_number = Math.random()*(max-min)+min;
      time.after(day);
 
 savebutton.onclick = function() {
-      
+    if (n==31){
+        window.close("test_truant.php");
+    window.open("anketa_truant.php");
+    }
      random_number = Math.random()*(max-min)+min; 
      itime = 900+random_number;
      if (itime<900){
@@ -47,7 +50,10 @@ savebutton.onclick = function() {
   };
   
 killbutton.onclick = function() {
-    
+    if (n==31){
+        window.close("test_truant.php");
+    window.open("anketa_truant.php");
+    }
     random_number = Math.random()*(max-min)+min;
     itime = 900+random_number;
     if (itime<900){
@@ -63,6 +69,10 @@ killbutton.onclick = function() {
 };
 
 nothingbutton.onclick = function() {
+    if (n==31){
+        window.close("test_truant.php");
+    window.open("anketa_truant.php");
+    }
     random_number = Math.random()*(max-min)+min;
     itime = 900+random_number;
     if (itime<900){
