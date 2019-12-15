@@ -1,7 +1,7 @@
 button {
     /* размеры кнопки */
-    width: 150px;
-    height: 40px;
+    width: 70%;
+    height: 60px;
     /* граница элемента */
     border: 1px solid black;
     /* белый фон */
@@ -35,6 +35,6 @@ button {
 }
  .container{
     position: absolute;
-    top: 70%;
-    left: 33%;
+    top: 50%;
+    left: 38%;
  }

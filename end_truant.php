@@ -19,6 +19,13 @@
   <p>Спасибо за участие</a>.</p>
 </div>
 
+<?php
+session_start();
+for ($i=1; $i<30; $i++){
+echo $_SESSION['actions'][$i];
+echo '<br>';
+}
+?>
 
 
 

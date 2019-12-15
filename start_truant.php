@@ -15,6 +15,8 @@
 <body>
 
 <?php
+session_start();
+session_destroy();
 $mysql['host']="127.0.0.1";
 $mysql['username']="root";
 $mysql['password']="usbw";
