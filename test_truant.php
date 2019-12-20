@@ -17,10 +17,9 @@
 
 <?php
 
-  $AllStrategies=array(0, 1, 2, /*3, 4, 666*/); //Здесь должны быть указаны номера всех стратегий
+  $AllStrategies=array(0, 1, 2, /*3, 4*/); //Здесь должны быть указаны номера всех стратегий
 //$strategy=$AllStrategies[array_rand($AllStrategies, 1)]; //Выбор из всех стратегий 
 $strategy=0; //Только стандартная стратегия
-
 
 //Васи
 
@@ -66,17 +65,10 @@ if ($strategy==4){   //Вася иправляющийся по четным д�
 <button name='nothing' value='Ничего не делать' OnClick='NewDay(buttons[2].value, -20*Math.pow(-1, Iday) )'><img width=20 src='https://c7.hotpng.com/preview/661/444/1011/american-red-cross-computer-icons-christian-cross-clip-art-big-red-cliparts-thumbnail.jpg'> Ничего не делать</button>
 </div>";}
 
-if ($strategy==666){   //Учитель садист
-  echo "<div class='container'>
-<button name='close' value='Запереть в классе' OnClick='NewDay(buttons[0].value, -20000 )'>Запереть в классе</button>
-<button name='killingwords' value='Угрожать' OnClick='NewDay(buttons[1].value, 20000 )'>Угрожать</button>
-<button name='director' value='Отправить к директору' OnClick='NewDay(buttons[2].value, -20 )'>Отправить к директору</button>
-</div>";}
-
 ?>
+
 <div class='data-php' data-strategy="<?=$strategy; ?>"></div>
 <script src="test_truant_script.js"></script>
-
 
 
 </body>

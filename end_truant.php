@@ -1,13 +1,15 @@
 <html>
 
 <head>
-<link rel="stylesheet"  href="Vasya-the-truant/truant_style.css">
+<!--<link rel="stylesheet"  href="Vasya-the-truant/truant_style.css">-->
 <meta charset="UTF-8">
 <title>Спасибо за участие</title>
   <style>
    body {
     background: lightblue; /* Цвет фона */
     /* color: #fc0; /* Цвет текста  */  
+    font-size:100px;
+    text-align:center;
    }
   </style>
 
@@ -16,18 +18,64 @@
 
 
 <div class=container>
-  <p>Спасибо за участие</a>.</p>
+  <p>Спасибо за участие!</a></p>
 </div>
 
 <?php
-session_start();
-for ($i=1; $i<30; $i++){
-echo $_SESSION['actions'][$i];
-echo '<br>';
+
+if (isset($_POST['log'])) $log = $_POST['log'];
+else die;
+if (isset($_POST['gender'])) $gender = $_POST['gender'];
+else die;
+if (isset($_POST['date'])) $date = $_POST['date'];
+else die;
+if (isset($_POST['education'])) $education = $_POST['education'];
+else die;
+if (isset($_POST['strategy'])) $strategy = $_POST['strategy'];
+else die;
+if (isset($_POST['actions'])) $actions = $_POST['actions'];
+else die;
+if (isset($_POST['comment'])) $comment = $_POST['comment'];
+
+$alog=explode(",", $log);
+
+$mysql['host']="127.0.0.1";
+$mysql['username']="root";
+$mysql['password']="usbw";
+$mysql['database']="vasya";
+$mysql['port']=NULL; 
+$mysql['socket']=NULL;
+
+$link= new mysqli($mysql['host'],$mysql['username'],$mysql['password'], $mysql['database'])
+    or die('Не удалось соединиться: ' . mysql_error());
+
+mysqli_query($link, "SET NAMES 'utf8'");
+$query = "INSERT INTO `респонденты` (`Пол`, `Дата рождения`, `Образование`, `Стратегия`, `Оценка действий`, `Комментарий`) VALUES ('$gender', '$date', '$education', '$strategy', '$actions', '$comment')";
+mysqli_query($link, $query);
+
+$id=mysqli_insert_id($link);
+
+for ($i=0; $i<30; $i++){
+$j=3*$i;
+$k=1+3*$i;
+$l=2+3*$i;
+$query = "INSERT INTO `игры респондентов`  
+(`Индекс респондента`, `День`, `Время прихода`, `Действие`) VALUES ('$id', '$alog[$j]', '$alog[$k]', '$alog[$l]')";
+if (mysqli_query($link, $query)) echo "<br> woooooork";
+else echo mysqli_error($link);
 }
+
+mysqli_close($link);
 ?>
+<script>
+localStorage.clear();
+</script>
 
+<?php
 
+header("Location: end_truant.php")
+
+?>
 
 </body>
 
