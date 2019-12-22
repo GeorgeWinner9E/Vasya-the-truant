@@ -1,7 +1,7 @@
 <html>
 
 <head>
-<link rel="stylesheet"  href="Vasya-the-truant/truant_style.css">
+<link rel="stylesheet"  href="truant_style.css">
 <meta charset="UTF-8">
 <title>Прогульщик Вася</title>
   <style>
@@ -31,7 +31,7 @@
 
 
 <form>
-<button formaction="Vasya-the-truant/start_truant.php" name="start">></button>
+<button formaction="start_truant.php" name="start">></button>
 </form>
 
 </body>

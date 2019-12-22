@@ -7,6 +7,9 @@ var Stime=''; //Текст выводимый пользователю
 var logStime=''; //Только время прихода Васи
 var stats=[];  //лог игры
 var buttons = document.querySelectorAll("button"); //Все кнопки
+var clicktime = 0;
+var start = new Date;
+var end = new Date;
 
 function random_time(influence=0){
   
@@ -15,7 +18,8 @@ function random_time(influence=0){
     let max=20+influence; //Максимальное время прихода, относительно начала урока 
     let min=-20+influence; //Минимальное время прихода
     let delay='';  
-  
+    
+
   random_number = Math.random()*(max-min)+min; //Генерируем время прихода Васи 
      itime = 900+parseInt(random_number/60)*100;
      if (random_number<0){
@@ -51,9 +55,10 @@ function random_time(influence=0){
 
 function NewDay(Saction, influence=0){   //Функция нового дня    
     if (Iday>1){
-    stats.push([Iday-1, logStime, Saction]); //Записываем данные о прошлом дне
-    }
-
+        end = new Date;
+        clicktime=end-start;
+    stats.push([Iday-1, logStime, Saction, Math.floor(clicktime/10)]); //Записываем данные о прошлом дне
+}
     random_time();
 
      if (Iday==1){             //Создаем блоки div с нужной информацией
@@ -61,7 +66,9 @@ function NewDay(Saction, influence=0){   //Функция нового дня
      day.innerHTML = '<strong>День '+Iday+'</strong>';}
 
      else if (Iday>=30){ //Финальный день 
-        stats.push([Iday, logStime, 'Завершить']); 
+        end = new Date;
+        clicktime=end-start; 
+        stats.push([Iday, logStime, 'Завершить', Math.floor(clicktime/10)]); 
         time.innerHTML = 'Вчера Вы выбрали: '+Saction+'<br>'+Stime+'<br><br>Конец игры';
      day.innerHTML = '<strong>День '+Iday+'</strong>';
 
@@ -93,7 +100,7 @@ function NewDay(Saction, influence=0){   //Функция нового дня
      
      document.body.prepend(day);  //Выводим блоки с информацией на страницу
      day.after(time);
-
+     start = new Date;
      Iday=Iday+1; //Увеличиваем счетчик дня
 }
 

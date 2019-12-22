@@ -30,8 +30,8 @@
 </fieldset>
 
 <p>
-Ваша дата рождения<span class='required'>*<span> <br>
-<input type="date" id="date" name="date" required>
+Ваш возраст (число)<span class='required'>*<span> <br>
+<input type="text" id="age" name="age" required pattern="^[0-9]+$">
 </p>
 
 <p>
@@ -63,6 +63,11 @@ let actionsdata=document.createElement('input');
 let logdata=document.createElement('input');
 let send=document.getElementById('final');
 
+if (log==null){
+  alert("Ошибка. Данные не были загружены. Возможно, сервер временно недоступен или были использованы кнопки \"Назад\", \"Обновить\" или \"Вперед\". Вы будете перенаправлены на первую страницу.");
+  document.location.href='reference_truant.php';
+}
+
 strategydata.name='strategy';
 strategydata.value=actions[0];
 strategydata.type='hidden';
@@ -77,6 +82,7 @@ logdata.value=log;
 send.appendChild(strategydata);
 send.appendChild(actionsdata);
 send.appendChild(logdata);
+localStorage.clear();
 </script>
 
 

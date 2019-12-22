@@ -27,7 +27,7 @@ if (isset($_POST['log'])) $log = $_POST['log'];
 else die;
 if (isset($_POST['gender'])) $gender = $_POST['gender'];
 else die;
-if (isset($_POST['date'])) $date = $_POST['date'];
+if (isset($_POST['age'])) $age = $_POST['age'];
 else die;
 if (isset($_POST['education'])) $education = $_POST['education'];
 else die;
@@ -50,29 +50,23 @@ $link= new mysqli($mysql['host'],$mysql['username'],$mysql['password'], $mysql['
     or die('Не удалось соединиться: ' . mysql_error());
 
 mysqli_query($link, "SET NAMES 'utf8'");
-$query = "INSERT INTO `респонденты` (`Пол`, `Дата рождения`, `Образование`, `Стратегия`, `Оценка действий`, `Комментарий`) VALUES ('$gender', '$date', '$education', '$strategy', '$actions', '$comment')";
+$query = "INSERT INTO `респонденты` (`Пол`, `Возраст`, `Образование`, `Стратегия`, `Оценка действий`, `Комментарий`) VALUES ('$gender', '$age', '$education', '$strategy', '$actions', '$comment')";
 mysqli_query($link, $query);
 
 $id=mysqli_insert_id($link);
 
 for ($i=0; $i<30; $i++){
-$j=3*$i;
-$k=1+3*$i;
-$l=2+3*$i;
+$j=4*$i;
+$k=1+4*$i;
+$l=2+4*$i;
+$m=3+4*$i;
 $query = "INSERT INTO `игры респондентов`  
-(`Индекс респондента`, `День`, `Время прихода`, `Действие`) VALUES ('$id', '$alog[$j]', '$alog[$k]', '$alog[$l]')";
-if (mysqli_query($link, $query)) echo "<br> woooooork";
+(`Индекс респондента`, `День`, `Время прихода`, `Действие`, `Время ответа`) VALUES ('$id', '$alog[$j]', '$alog[$k]', '$alog[$l]', '$alog[$m]')";
+if (mysqli_query($link, $query));
 else echo mysqli_error($link);
 }
 
 mysqli_close($link);
-?>
-<script>
-localStorage.clear();
-</script>
-
-<?php
-
 header("Location: end_truant.php")
 
 ?>

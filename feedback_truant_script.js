@@ -1,4 +1,10 @@
 let actions = JSON.parse(localStorage.getItem('actions')); //возвращаем массив действий с прошлой страницы
+
+if (actions==''){
+    alert("Ошибка. Данные не были загружены. Возможно, сервер временно недоступен или были использованы кнопки \"Назад\", \"Обновить\" или \"Вперед\". Вы будете перенаправлены на первую страницу.");
+    document.location.href='reference_truant.php';
+}
+
 let  mainform = document.getElementById('main');  //Главная форма
 let divs = []; //Массив блоков оценки
 
