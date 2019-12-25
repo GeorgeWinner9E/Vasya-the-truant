@@ -18,7 +18,6 @@ function random_time(influence=0){
     let max=20+influence; //Максимальное время прихода, относительно начала урока 
     let min=-20+influence; //Минимальное время прихода
     let delay='';  
-    
 
   random_number = Math.random()*(max-min)+min; //Генерируем время прихода Васи 
      itime = 900+parseInt(random_number/60)*100;
@@ -59,7 +58,7 @@ function NewDay(Saction, influence=0){   //Функция нового дня
         clicktime=end-start;
     stats.push([Iday-1, logStime, Saction, Math.floor(clicktime/10)]); //Записываем данные о прошлом дне
 }
-    random_time();
+    random_time(influence);
 
      if (Iday==1){             //Создаем блоки div с нужной информацией
      time.innerHTML = Stime+'<br>Как Вы поступите?<br>(Выберите один из вариантов)';

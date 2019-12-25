@@ -47,7 +47,7 @@ $mysql['port']=NULL;
 $mysql['socket']=NULL;
 
 $link= new mysqli($mysql['host'],$mysql['username'],$mysql['password'], $mysql['database'])
-    or die('Не удалось соединиться: ' . mysql_error());
+or die('Не удалось соединиться: ' . mysql_error());
 
 mysqli_query($link, "SET NAMES 'utf8'");
 $query = "INSERT INTO `респонденты` (`Пол`, `Возраст`, `Образование`, `Стратегия`, `Оценка действий`, `Комментарий`) VALUES ('$gender', '$age', '$education', '$strategy', '$actions', '$comment')";
@@ -62,15 +62,11 @@ $l=2+4*$i;
 $m=3+4*$i;
 $query = "INSERT INTO `игры респондентов`  
 (`Индекс респондента`, `День`, `Время прихода`, `Действие`, `Время ответа`) VALUES ('$id', '$alog[$j]', '$alog[$k]', '$alog[$l]', '$alog[$m]')";
-if (mysqli_query($link, $query));
-else echo mysqli_error($link);
-}
+mysqli_query($link, $query);}
 
 mysqli_close($link);
-header("Location: end_truant.php")
+header("Location: end_truant.php");
 
 ?>
-
 </body>
-
 </html>
