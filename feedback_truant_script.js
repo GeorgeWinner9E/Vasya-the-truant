@@ -13,7 +13,7 @@ for (let i=1; i<actions.length; i++){
 mainform.appendChild(divs[i]);
 
 let legend = document.createElement('legend');
-legend.appendChild(document.createTextNode('Оцените эффективность дейтвия \"'+actions[i]+'\"'));
+legend.appendChild(document.createTextNode('Оцените эффективность действия \"'+actions[i]+'\"'));
 divs[i].appendChild(legend);
 
     var new_text=document.createTextNode(1);

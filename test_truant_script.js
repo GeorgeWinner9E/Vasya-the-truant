@@ -41,11 +41,11 @@ function random_time(influence=0){
        logStime=logStime[0]+':'+logStime[1]+logStime[2];
        Stime='Сегодня Вася пришел в <strong>'+logStime+'</strong>'+delay;}
 
-     if (itime>=1500){
+     if (itime>=1200){
          logStime='Не пришел';
          Stime="Сегодня Вася не пришел в школу"
      }
-     if (itime<500){
+     if (itime<600){
         logStime='Не уходил'
         Stime = "Сегодня Вася ночевал в школе, чтобы не опоздать на урок"
      }
