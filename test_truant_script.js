@@ -11,6 +11,10 @@ var clicktime = 0;
 var start = new Date;
 var end = new Date;
 
+function strategy_generation(value, action, image){
+
+}
+
 function random_time(influence=0){
   
     let random_number=0;

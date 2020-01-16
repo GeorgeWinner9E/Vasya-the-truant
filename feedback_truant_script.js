@@ -25,7 +25,7 @@ for (let j=1; j<11; j++){   //заполняем блок кнопками го�
     new_rate.type='radio';
     new_rate.value=j;
     new_rate.onchange = function(){
-        actions[new_rate.name]=actions[new_rate.name]+' '+new_rate.value;
+        actions[new_rate.name]=new_rate.value;
     }
     divs[i].appendChild(new_rate);
 }
