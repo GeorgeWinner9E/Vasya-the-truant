@@ -11,7 +11,7 @@ var clicktime = 0;
 var start = new Date;
 var end = new Date;
 
-function strategy_generation(value, action, image){
+function strategy_generation(value, action, image=''){
 
 }
 

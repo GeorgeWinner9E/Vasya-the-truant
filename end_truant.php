@@ -49,7 +49,7 @@ $mysql['port']=NULL;
 $mysql['socket']=NULL;
 
 $link= new mysqli($mysql['host'],$mysql['username'],$mysql['password'], $mysql['database'])
-or die('Не удалось соединиться: ' . mysql_error());
+or die('Не удалось соединиться: ' . mysqli_error());
 
 mysqli_query($link, "SET NAMES 'utf8'");
 $query = "INSERT INTO `респонденты` (`Пол`, `Возраст`, `Образование`, `Стратегия`, `Действие 1`, `Действие 2`, `Действие 3`, `Комментарий`) VALUES ('$gender', '$age', '$education', '$strategy', '$aacts[0]', '$aacts[1]', '$aacts[2]', '$comment')";
