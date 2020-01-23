@@ -5,19 +5,7 @@ window.onload= function() {
     let $strlist = $('#strlist');
     let $table = $('#strpanel');
     let $add = $('#addbtn');
-
-    $.getJSON('strategies.json', function(json) {
-        stratslist = json.AllStrategies;
-        strats = json;
-        for (let i=0; i<Object.keys(stratslist).length; i++) {
-            let $str = $('<option value="'+i+'">'+stratslist[i]+'</option>');
-            $strlist.append($str);
-        }
-
-        loadstr();
-    });
-
-    $add.click(AddRow);
+    let $delall = $('#delallbtn')
 
     function AddRow() {
         let $Row = $($table[0].insertRow());
@@ -34,17 +22,44 @@ window.onload= function() {
         $Cell.append($delbtn);
     }
 
-
+    function cleartable(){
+        $("#strpanel tr:not(:has(th))").remove();
+    }
 
     function loadstr() {
+        cleartable();
         let chosenone = strats[$strlist.val()];
         for (let i=0; i<Object.keys(chosenone).length; i++){
             AddRow();
             for (let j=0; j<3; j++) {
-                $table.children().children().children()[j].children("input").value = chosenone[i][j];
-
+                //alert(chosenone[i][j]);
+                $($($table.children().children()[i+1]).children()[j]).children("input")[0].value = chosenone[i][j];
 
             }}
     }
+
+    function addstr() {
+        cleartable();
+        AddRow();
+        let $str =  $('<option value="'+$strlist.children().length+'">Новая стратегия</option>');
+    }
+
+    $.getJSON('strategies.json', function(json) {
+        stratslist = json.AllStrategies;
+        strats = json;
+        for (let i=0; i<Object.keys(stratslist).length; i++) {
+            let $str = $('<option value="'+i+'">'+stratslist[i]+'</option>');
+            $strlist.append($str);
+        }
+
+        loadstr();
+    });
+
+
+    $strlist.change(loadstr);
+    $add.click(AddRow);
+    $delall.click(cleartable);
+
+
 
 }

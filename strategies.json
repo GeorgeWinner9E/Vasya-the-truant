@@ -33,8 +33,12 @@
       "https://c7.hotpng.com/preview/661/444/1011/american-red-cross-computer-icons-christian-cross-clip-art-big-red-cliparts-thumbnail.jpg"
     ]
   },
-  "AllStrategies": {
-    "0": "Базовая",
-    "1": "Вася боящийся"
-  }
+  "AllStrategies": [
+    "Базовая",
+    "Вася боящийся"
+  ],
+  "UsedStrategies": [
+    "0",
+    "1"
+  ]
 }
