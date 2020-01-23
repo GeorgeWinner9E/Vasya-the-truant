@@ -5,7 +5,11 @@ window.onload= function() {
     let $strlist = $('#strlist');
     let $table = $('#strpanel');
     let $add = $('#addbtn');
-    let $delall = $('#delallbtn')
+    let $delall = $('#delallbtn');
+    let $straddbtn = $('#straddbtn');
+    let $strdelbtn = $('#strdelbtn');
+    let $strsavebtn = $('#strsavebtn');
+
 
     function AddRow() {
         let $Row = $($table[0].insertRow());
@@ -40,8 +44,16 @@ window.onload= function() {
 
     function addstr() {
         cleartable();
-        AddRow();
         let $str =  $('<option value="'+$strlist.children().length+'">Новая стратегия</option>');
+        $strlist.append($str);
+        $str.attr('selected', 'selected');
+        AddRow();
+    }
+
+    function delstr() {
+        cleartable();
+        let $str =  $('<option value="'+$strlist.children().length+'">Новая стратегия</option>');
+        $strlist.append($str);
     }
 
     $.getJSON('strategies.json', function(json) {
@@ -55,11 +67,15 @@ window.onload= function() {
         loadstr();
     });
 
+    function NotWorking(){
+        alert('В разработке');
+    }
 
     $strlist.change(loadstr);
     $add.click(AddRow);
     $delall.click(cleartable);
-
-
+    $straddbtn.click(addstr);
+    $strdelbtn.click(NotWorking);
+    $strsavebtn.click(NotWorking);
 
 }
