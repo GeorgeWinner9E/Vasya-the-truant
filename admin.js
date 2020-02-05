@@ -67,13 +67,9 @@ window.onload= function() {
             //cleartable();
             AllStrList.splice($strlist.val(), 1);
             delete strobject[$strlist.val()];
-            for (let i=$strlist.val(); i<$strlist.children().length; i++){
+            for (let i=parseInt($strlist.val()); i<$strlist.children().length; i++){
                 $('option[value="'+i+'"]').val($('option[value="'+i+'"]').val()-1);
-                console.log(i);
-                console.log(strobject[3]);
-                console.log(strobject[i+1]);
-                //strobject[i] = strobject[i+1];
-                //console.log(strobject);
+                strobject[i] = strobject[i+1];
             };
 
             $('#strlist option:selected').remove();
@@ -84,6 +80,7 @@ window.onload= function() {
     }
 
     function SaveStrategy(){ //Переписать переменную strobject
+        //changename();
         let index = $strlist.val();
         AllStrList[index] = $('#strlist option:selected').html();
         let strbtns = {}; //объект, содержащий строки таблицы (не ячейки)
@@ -99,14 +96,14 @@ window.onload= function() {
 
     function SaveToJSON(){  //Переписать файл strategies.json
         SaveStrategy();
-        /*$.ajax({
+        $.ajax({
             url:"savestr.php",
             success: function (get) {
                 //alert (int);
             },
             method: "POST",
             data: {str: strobject}
-        });*/
+        });
     }
 
 
@@ -117,7 +114,6 @@ window.onload= function() {
             let $str = $('<option value="'+i+'">'+AllStrList[i]+'</option>');
             $strlist.append($str);
         }
-
         loadstr();
     });
 
