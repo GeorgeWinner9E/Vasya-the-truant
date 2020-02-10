@@ -9,7 +9,7 @@
    body {
     background: lightblue; /* Цвет фона */
     /* color: #fc0; /* Цвет текста */
-    font-size: 30px;
+    font-size: 18px;
    }
 
   </style>
@@ -20,7 +20,11 @@
   <select id="strlist" size="1">
 
   </select>
-
+  <button id="btnname">Переименовать</button>
+  <button id="straddbtn">Добавить стратегию</button>
+  <button id="strdelbtn">Удалить стратегию</button>
+  Использовать стратегию<input type="checkbox" id="Use">
+  <br><br>
   <table id="strpanel" width="650" border="1" cellspacing="0" cellpadding="5">
     <tr>
       <th scope="col">Название</th>
@@ -30,11 +34,11 @@
     </tr>
   </table>
   <button id="addbtn">+</button>
-  <button id="delallbtn">Очистить</button><br>
-  <button id="strdelbtn">Удалить стратегию</button>
-  <button id="straddbtn">Добавить стратегию</button>
-  <input type="text" id="strname" placeholder="Имя стратегии" value=""><br><br>
+  <button id="delallbtn">Удалить все поля</button><br><br>
+  <br><br>
+  <button id="Cancel">Отменить изменения</button>
   <button id="strsavebtn">Сохранить все изменения</button>
+
 </div>
 
 

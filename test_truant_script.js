@@ -1,18 +1,54 @@
+window.onload= function() {
 
-var time = document.createElement('div'); //Поле "Время и события"
+let time = document.createElement('div'); //Поле "Время и события"
 time.className = "alert";
-var day = document.createElement('div'); //Поле "День"
-var Iday=1; //Счетчик дней
-var Stime=''; //Текст выводимый пользователю
-var logStime=''; //Только время прихода Васи
-var stats=[];  //лог игры
-var buttons = document.querySelectorAll("button"); //Все кнопки
-var clicktime = 0;
-var start = new Date;
-var end = new Date;
+let day = document.createElement('div'); //Поле "День"
+let Iday=1; //Счетчик дней
+let Stime=''; //Текст выводимый пользователю
+let logStime=''; //Только время прихода Васи
+let stats=[];  //лог игры
+let clicktime = 0;
+let start = new Date;
+let end = new Date;
+let AllStrList;   //Список всех стратегий (индекс - название). Тип "Объект"
+let strobject;    //Объект, в котором лежат все стратегии (по индексам), AllStrategies и UsedStrategies
+let UsedStrList;
+let $divbtn = $('#btns'); //Блок кнопок
 
-function strategy_generation(value, action, image=''){
+$.getJSON('strategies.json', function(json) {  //Получение файла strategies.json
+   AllStrList = json.AllStrategies;
+   strobject = json;
+   UsedStrList = json.UsedStrategies;
+/*    console.log(AllStrList);
+    console.log(UsedStrList);
+    console.log(strobject);*/
+    strategy_generation();
+});
 
+function strategy_generation(){
+    str = Math.floor(Math.random() * (UsedStrList.length)-0,00001);
+    // console.log(str);
+    strname = AllStrList[UsedStrList[str]];
+    strbtns = strobject[UsedStrList[str]];
+    for (let i=0; i<strbtns.length; i++){
+        let button = $('<button></button>');
+        button.attr('value', strbtns[i][0]);
+        //console.log(strbtns[i][0]);
+        button.click(function(){
+            NewDay(strbtns[i][0], parseInt(strbtns[i][1]));
+        });
+        if (strbtns[i][2]!=''){
+        btntext = '<img width="20px" src="'+strbtns[i][2]+'"> '+strbtns[i][0];
+        console.log(1);
+        } else {
+            btntext = strbtns[i][0];
+            console.log(2);
+        }
+
+        button.html(btntext);
+        //console.log(button);
+        $divbtn.append(button);
+    }
 }
 
 function random_time(influence=0){
@@ -68,35 +104,33 @@ function NewDay(Saction, influence=0){   //Функция нового дня
      time.innerHTML = Stime+'<br>Как Вы поступите?<br>(Выберите один из вариантов)';
      day.innerHTML = '<strong>День '+Iday+'</strong>';}
 
-     else if (Iday>=30){ //Финальный день 
+     else if (Iday>=30){ //Финальный день
         end = new Date;
         clicktime=end-start; 
         stats.push([Iday, logStime, 'Завершить', Math.floor(clicktime/10)]); 
         time.innerHTML = 'Вчера Вы выбрали: '+Saction+'<br>'+Stime+'<br><br>Конец игры';
      day.innerHTML = '<strong>День '+Iday+'</strong>';
 
-    let buttonsdiv=buttons[0].parentNode; //Находим блок, где лежат кнопки
-    let endbtn=document.createElement('button'); //создаем кнопку завершения
-        endbtn.style.width=200;
-    let endtext=document.createTextNode('Завершить');
-     endbtn.appendChild(endtext);
-
+     let endbtn = $('<button></button>'); //создаем кнопку завершения
+     let endtext=document.createTextNode('Завершить');
+     endbtn.append(endtext);
+     endbtn.css('width', "200px");
      let logactions=[];  //создаем переменную стратегии и кнопок
 
-     logactions.push(document.querySelector('.data-php').getAttribute('data-strategy')); //узнаем номер стратегии
+     logactions.push(str); //узнаем номер стратегии
      
-     for (let i=0; i<buttons.length; i++){  //узнаем названия кнопок и удаляем их
-     logactions.push(buttons[i].value);
-     buttons[i].remove();
+     for (let i=0; i<strbtns.length; i++){  //узнаем названия кнопок и удаляем их
+     logactions.push($divbtn.children()[0].value);
+     $divbtn.children()[0].remove()
      }
-     buttonsdiv.appendChild(endbtn); //добавляем кнопку "Завершить"
-     endbtn.onclick=function(){
+     $divbtn.append(endbtn); //добавляем кнопку "Завершить"
+     endbtn.click(function(){
       let jstats =JSON.stringify(stats);
       let jactions = JSON.stringify(logactions);
        localStorage.setItem('stats', jstats);
        localStorage.setItem('actions', jactions);
     document.location.href='feedback_truant.php';
-     }}
+     });}
 
      else {time.innerHTML = 'Вчера Вы выбрали: '+Saction+'<br>'+Stime+'<br>Как Вы поступите?<br>';
      day.innerHTML = '<strong>День '+Iday+'</strong>';}         
@@ -109,3 +143,4 @@ function NewDay(Saction, influence=0){   //Функция нового дня
 
 NewDay();
 
+}
