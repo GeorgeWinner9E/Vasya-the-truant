@@ -13,6 +13,10 @@ window.onload= function() {
     let $btnname = $('#btnname'); //Поле ввода имени стратегии
     let $Use = $('#Use');
     let $Cancel = $('#Cancel');
+    let $agreement = $('#agreement');
+    let $rules = $('#rules');
+    let $getdata = $('#getdata');
+    let $cleandata = $('#cleandata');
 
     function changename(newname){  //Изменить имя стратегии
         if (newname!=null){
@@ -75,10 +79,6 @@ window.onload= function() {
                     UsedStrList[i]=(UsedStrList[i]-1).toString();
                 }
             };
-            /*UsedStrList.forEach(function (item) {
-            if (item>$strlist.val()){
-                item-=1;
-            }});*/
             AllStrList.splice($strlist.val(), 1);
             delete strobject[$strlist.val()];
             for (let i=parseInt($strlist.val()); i<$strlist.children().length; i++){
@@ -126,6 +126,8 @@ window.onload= function() {
         $.getJSON('strategies.json', function(json) {  //Получение файла strategies.json
             AllStrList = json.AllStrategies;
             UsedStrList = json.UsedStrategies;
+            Rules = json.Rules;
+            Agreement = json.Agreement;
             strobject = json;
             for (let i=0; i<Object.keys(AllStrList).length; i++) {
                 let $str = $('<option value="'+i+'">'+AllStrList[i]+'</option>');
@@ -135,9 +137,82 @@ window.onload= function() {
         });
     }
 
+    function newlay(file){
+        var docHeight = $(document).height();
+        $("body").append("<div id='overlay'></div>");
+        $overlay = $("#overlay")
+            .height(docHeight)
+            .css({
+                'opacity' : 1,
+                'position': 'absolute',
+                'top': 0,
+                'left': 0,
+                'background-color': 'lightblue',
+                'width': '100%',
+                'z-index': 5000
+            });
+        $block = $('<div></div>')
+            .css({
+                'position': 'absolute',
+                'z-index': 5005,
+                'width': '95%',
+                'height': '95%',
+                'top': 0,
+                'left': 0,
+                'bottom': 0,
+                'right': 0,
+                'margin': '3%',
+            });
+        $txt = $('<textarea></textarea>')
+            .css({
+                'width': '100%',
+                'height': '90%',
+                'top': 0,
+                'left': 0,
+                'resize': 'none'
+
+            });
+        if (file == 'Rules'){
+            $txt.val(Rules);
+        }
+        if (file == 'Agreement'){
+            $txt.val(Agreement);
+        }
+        $btnok = $('<button>Продолжить</button>');
+        $btnok.attr('file', file);
+        $btnok.click(senddata);
+        $btnno = $('<button>Отмена</button>');
+        $btnno.click(function () {
+            $overlay.remove();
+            $block.remove();
+        });
+        $block.append($txt);
+        $block.append($btnok);
+        $block.append($btnno);
+        $("body").append($block);
+
+
+        function senddata() {
+            file = $btnok.attr('file');
+        if (file == 'Rules'){
+            Rules = $txt.val();
+            strobject.Rules = $txt.val();
+        }
+        if (file == 'Agreement') {
+            Agreement = $txt.val();
+            strobject.Agreement = $txt.val();
+        }
+            $overlay.remove();
+            $block.remove();
+        };
+
+    }
+
     $.getJSON('strategies.json', function(json) {  //Получение файла strategies.json
         AllStrList = json.AllStrategies;
         UsedStrList = json.UsedStrategies;
+        Rules = json.Rules;
+        Agreement = json.Agreement;
         strobject = json;
         for (let i=0; i<Object.keys(AllStrList).length; i++) {
             let $str = $('<option value="'+i+'">'+AllStrList[i]+'</option>');
@@ -170,5 +245,39 @@ window.onload= function() {
        Cancel();
     }
     });
+    $agreement.click(function () {
+    newlay('Agreement');
+    });
 
+    $rules.click(function () {
+    newlay('Rules');
+    });
+
+    $getdata.click(function () {
+        $.ajax({
+            url:"getdata.php",
+            success: function (get) {
+                //alert (get);
+            },
+            method: "POST",
+            data: {}
+        });
+    });
+
+    $cleandata.click(function () {
+        if (confirm('Вы уверены, что хотите очистить базу данных? \n Отменить действие невозможно')){
+            $.ajax({
+                url:"cleardata.php",
+                success: function (get) {
+                    alert (get);
+                },
+                method: "POST",
+                data: {}
+            });
+        }
+    });
+/*    $(function(){
+
+            });
+    });*/
 }

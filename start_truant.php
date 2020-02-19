@@ -18,9 +18,11 @@
 
 <form>
 <div>
-  <p>Вы - учитель в школе. Уроки начинаются в 9:00. Ученик Вася постоянно опаздывает на Ваши уроки. 
-   Вы можете влиять на Васю различными методами в течении 30 дней. 
-   Ваша цель - понять, как Ваши действия влияют на время прихода Васи</a>.</p>
+    <?php
+    $string = file_get_contents("strategies.json");
+    $data = json_decode($string);
+    echo $data->Rules;
+    ?>
 </div>
 <button formaction="test_truant.php">Начать</button>
 </form>
