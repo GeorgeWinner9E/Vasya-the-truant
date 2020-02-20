@@ -257,7 +257,7 @@ window.onload= function() {
         $.ajax({
             url:"getdata.php",
             success: function (get) {
-                //alert (get);
+                alert (get);
             },
             method: "POST",
             data: {}

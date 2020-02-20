@@ -9,7 +9,8 @@ $mysql['socket']=NULL;
 $link= new mysqli($mysql['host'],$mysql['username'],$mysql['password'], $mysql['database'])
 or die('Не удалось соединиться: ' . mysqli_error());
 mysqli_query($link, "SET NAMES 'utf8'");
-$query = "SELECT * FROM респонденты JOIN `игры респондентов` ON `Индекс респондента` = респонденты.индекс";
+$query = "SELECT `Индекс респондента`,Пол, Возраст, Образование, Стратегия, `Действие 1`, `Действие 2`, `Действие 3`, Комментарий, День, `Время прихода`, Действие, `Время ответа` FROM респонденты JOIN `игры респондентов`
+		ON `Индекс респондента` = респонденты.индекс";
 $result = mysqli_query($link, $query);
 if (!$result){
     echo mysqli_error($link);
@@ -29,12 +30,27 @@ header("Cache-Control: private",false);
 $output = fopen('data.csv', 'w+');
 
 //fputcsv($output, array('ID','Column1','Column2','Column3'));
-
 while ($row = mysqli_fetch_assoc($result))
 {
-    fputcsv($output, $row);
+    echo $row['Индекс респондента'];
+/*    if ($del == true){
+        unset($row['Пол']);
+        unset($row['Возраст']);
+        unset($row['Образование']);
+        unset($row['Стратегия']);
+        unset($row['Действие 1']);
+        unset($row['Действие 2']);
+        unset($row['Действие 3']);
+        unset($row['Комментарий']);
+    }*/
+
+    $send = iconv('utf-8', 'windows-1251', implode(',', $row));;
+
+    fputcsv($output, explode(',', $send));
+
 }
 
 fclose($output);
+
 mysqli_free_result($result);
 mysqli_close($link);
