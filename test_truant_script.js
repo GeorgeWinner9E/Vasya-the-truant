@@ -14,15 +14,36 @@ let AllStrList;   //Список всех стратегий (индекс - н�
 let strobject;    //Объект, в котором лежат все стратегии (по индексам), AllStrategies и UsedStrategies
 let UsedStrList;
 let $divbtn = $('#btns'); //Блок кнопок
+//let timedown = 840;
+//let timeup = 920;
 
 $.getJSON('strategies.json', function(json) {  //Получение файла strategies.json
    AllStrList = json.AllStrategies;
    strobject = json;
    UsedStrList = json.UsedStrategies;
+   try {
+       timedown = parseInt(json.timezone[0]);
+   } catch{
+       timedown = 840;
+   }
+   try {
+       timeup = parseInt(json.timezone[1]);
+   } catch{
+       timeup = 920;
+   }
+    try {
+        range = parseInt(json.timerange[0]);
+    } catch{
+        range = 20;
+    }
+   if (strobject.OnlyYou.length>0){
+       UsedStrList = strobject.OnlyYou;
+   }
 /*    console.log(AllStrList);
     console.log(UsedStrList);
     console.log(strobject);*/
     strategy_generation();
+    NewDay();
 });
 
 function strategy_generation(){
@@ -38,8 +59,7 @@ function strategy_generation(){
             NewDay(strbtns[i][0], parseInt(strbtns[i][1]));
         });
         if (strbtns[i][2]!=''){
-        btntext = '<img width="20px" src="'+strbtns[i][2]+'"> '+strbtns[i][0];
-        console.log(1);
+        btntext = '<img width="50px" src="'+strbtns[i][2]+'"> '+strbtns[i][0];
         } else {
             btntext = strbtns[i][0];
             console.log(2);
@@ -55,19 +75,25 @@ function random_time(influence=0){
   
     let random_number=0;
     let itime=900;  //Время начала урока (9:00)
-    let max=20+influence; //Максимальное время прихода, относительно начала урока 
-    let min=-20+influence; //Минимальное время прихода
-    let delay='';  
+    let max=range+influence; //Максимальное время прихода, относительно начала урока
+    let min=-range+influence; //Минимальное время прихода
+    let delay='';
 
-  random_number = Math.random()*(max-min)+min; //Генерируем время прихода Васи 
-     itime = 900+parseInt(random_number/60)*100;
+  random_number = Math.random()*(max-min)+min; //Генерируем время прихода Васи
+
      if (random_number<0){
          if (random_number>-1){random_number=-1;}
          itime=itime-40+random_number%60;
+         if (itime<timedown){
+             itime = timedown;
+         }
          delay=', придя раньше на '+Math.round(860-itime).toFixed(0)+' минут';
      }
      else {
          itime=itime+random_number%60;
+         if (itime>timeup){
+             itime = timeup;
+         }
          if (itime>=901){
          delay=', опоздав на '+Math.round(itime-900).toFixed(0)+' минут';
          }
@@ -141,6 +167,5 @@ function NewDay(Saction, influence=0){   //Функция нового дня
      Iday=Iday+1; //Увеличиваем счетчик дня
 }
 
-NewDay();
 
 }

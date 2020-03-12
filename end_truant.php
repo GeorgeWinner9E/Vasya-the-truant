@@ -52,7 +52,7 @@ $link= new mysqli($mysql['host'],$mysql['username'],$mysql['password'], $mysql['
 or die('Не удалось соединиться: ' . mysqli_error());
 
 mysqli_query($link, "SET NAMES 'utf8'");
-$query = "INSERT INTO `респонденты` (`Пол`, `Возраст`, `Образование`, `Стратегия`, `Действие 1`, `Действие 2`, `Действие 3`, `Комментарий`) VALUES ('$gender', '$age', '$education', '$strategy', '$aacts[0]', '$aacts[1]', '$aacts[2]', '$comment')";
+$query = "INSERT INTO `респонденты` (`Пол`, `Возраст`, `Образование`, `Стратегия`, `Действие 1`, `Действие 2`, `Действие 3`, `Действие 4`, `Действие 5`, `Действие 6`,`Действие 7`, `Действие 8`, `Действие 9`, `Действие 10`, `Комментарий`) VALUES ('$gender', '$age', '$education', '$strategy', '$aacts[0]', '$aacts[1]', '$aacts[2]', '$aacts[3]', '$aacts[4]', '$aacts[5]', '$aacts[6]', '$aacts[7]', '$aacts[8]', '$aacts[9]', '$comment')";
 mysqli_query($link, $query);
 
 $id=mysqli_insert_id($link);

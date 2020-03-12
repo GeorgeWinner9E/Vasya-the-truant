@@ -17,6 +17,9 @@ window.onload= function() {
     let $rules = $('#rules');
     let $getdata = $('#getdata');
     let $cleandata = $('#cleandata');
+    let $OnlyYou = $('#OnlyYou');
+    let $timezone = $('#timezone');
+    let $timerange = $('#timerange');
 
     function changename(newname){  //Изменить имя стратегии
         if (newname!=null){
@@ -24,7 +27,23 @@ window.onload= function() {
         SaveStrategy()}
     }
 
+    function changetimezone(down, up) {
+        if (down!=null){
+            strobject.timezone[0]=down;
+            }
+        if (up!=null){
+            strobject.timezone[1]=up;
+        }
+    }
+    function changetimerange(range) {
+        if (range!=null){
+            strobject.timerange[0]=range;
+        }
+    }
+
+
     function AddRow() {  //Добавить строку в таблицу
+        if ($table.children().children().length > 10){return};
         let $Row = $($table[0].insertRow());
         for (let i=0; i<3; i++){
             let    $Cell = $($Row[0].insertCell());
@@ -56,6 +75,13 @@ window.onload= function() {
         }
         else {
             $Use.prop('checked', false);
+        }
+        if (strobject.OnlyYou[0]==[$strlist.val()]){
+            $OnlyYou.prop('checked', true);
+            $Use.attr('disabled', 'disabled');
+        } else {
+            $OnlyYou.prop('checked', false);
+            $Use.attr('disabled', '');
         }
     }
 
@@ -237,6 +263,18 @@ window.onload= function() {
             }
         }
     });
+    $OnlyYou.click(function () {
+        if ($(this).is(':checked')){
+            if (strobject.OnlyYou.length>0) {
+                strobject.OnlyYou.pop();
+            }
+            $Use.attr('disabled', 'disabled');
+            strobject.OnlyYou.push($strlist.val());
+        } else {
+            $Use.attr('disabled', '');
+            strobject.OnlyYou.pop();
+        }
+    });
     $btnname.click(function () {
     changename(prompt("Введите новое имя", $('#strlist option:selected').html()))
     });
@@ -249,6 +287,15 @@ window.onload= function() {
     newlay('Agreement');
     });
 
+    $timezone.click(function () {
+      changetimezone(prompt("Введите минимальное время прихода").replace(':', ""),
+          prompt("Введите максимальное время прихода").replace(':', ""));
+    });
+
+      $timerange.click(function () {
+        changetimerange(prompt("Введите диапазон времени прихода"));
+    });
+
     $rules.click(function () {
     newlay('Rules');
     });
@@ -257,7 +304,7 @@ window.onload= function() {
         $.ajax({
             url:"getdata.php",
             success: function (get) {
-                alert (get);
+                alert(get);
             },
             method: "POST",
             data: {}
@@ -269,7 +316,7 @@ window.onload= function() {
             $.ajax({
                 url:"cleardata.php",
                 success: function (get) {
-                    alert (get);
+                   
                 },
                 method: "POST",
                 data: {}
