@@ -21,7 +21,7 @@
     <?php
     $string = file_get_contents("strategies.json");
     $data = json_decode($string);
-    echo $data->Rules;
+    echo nl2br($data->Rules);
     ?>
 </div>
 <button formaction="test_truant.php">Начать</button>

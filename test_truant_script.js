@@ -21,21 +21,25 @@ $.getJSON('strategies.json', function(json) {  //Получение файла s
    AllStrList = json.AllStrategies;
    strobject = json;
    UsedStrList = json.UsedStrategies;
-   try {
-       timedown = parseInt(json.timezone[0]);
-   } catch{
+
+
+
+   timedown = parseInt(json.timezone[0]);
+
+   if (isNaN(timedown)) {
        timedown = 840;
    }
-   try {
+
        timeup = parseInt(json.timezone[1]);
-   } catch{
+   if (isNaN(timeup)) {
        timeup = 920;
    }
-    try {
+
         range = parseInt(json.timerange[0]);
-    } catch{
+    if (isNaN(range)) {
         range = 20;
     }
+
    if (strobject.OnlyYou.length>0){
        UsedStrList = strobject.OnlyYou;
    }
