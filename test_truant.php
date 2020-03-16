@@ -11,8 +11,6 @@
     /* color: #fc0; /* Цвет текста */
     font-size: 30px;
    }
-
-  
   </style>
 </head>
 <body>

@@ -35,7 +35,7 @@ $now = 0;
 $flist = file_get_contents('strategies.json');
 $list = json_decode($flist,TRUE);
 if (isset($list['OnlyYou'][0])){
- $actcount = count($list[$list['OnlyYou'][0]]);
+ $actcount = count($list[$list['OnlyYou'][0]]);     //Получаем количество действий в стратегиях
 }
 else {
     $actcount = count($list[$list['UsedStrategies'][0]]);

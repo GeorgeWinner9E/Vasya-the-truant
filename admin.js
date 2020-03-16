@@ -11,15 +11,15 @@ window.onload= function() {
     let $strdelbtn = $('#strdelbtn'); //Кнопка удаления стратегии
     let $strsavebtn = $('#strsavebtn'); //Кнопка перезаписи файла Strategies.json
     let $btnname = $('#btnname'); //Поле ввода имени стратегии
-    let $Use = $('#Use');
-    let $Cancel = $('#Cancel');
-    let $agreement = $('#agreement');
-    let $rules = $('#rules');
-    let $getdata = $('#getdata');
-    let $cleandata = $('#cleandata');
-    let $OnlyYou = $('#OnlyYou');
-    let $timezone = $('#timezone');
-    let $timerange = $('#timerange');
+    let $Use = $('#Use'); //Флаг добавления в используемые стратегии
+    let $Cancel = $('#Cancel');  //Кнопка отмены всех изменений
+    let $agreement = $('#agreement');  //Приветственный текст
+    let $rules = $('#rules');   //Правила игры
+    let $getdata = $('#getdata');  //Кнопка скачивания базы данных
+    let $cleandata = $('#cleandata');  //Очищение базы данных
+    let $OnlyYou = $('#OnlyYou');  //флаг "Использовать только эту стратегию"
+    let $timezone = $('#timezone');   //Границы прихода Васи
+    let $timerange = $('#timerange');  //Диапазон, в который Вася приходит без учета влияний
 
     function changename(newname){  //Изменить имя стратегии
         if (newname!=null){
@@ -27,7 +27,7 @@ window.onload= function() {
         SaveStrategy()}
     }
 
-    function changetimezone(down, up) {
+    function changetimezone(down, up) {   //Изменить границы времени прихода
         if (down!=null){
             strobject.timezone[0]=down;
             }
@@ -35,7 +35,7 @@ window.onload= function() {
             strobject.timezone[1]=up;
         }
     }
-    function changetimerange(range) {
+    function changetimerange(range) {  //Изменить диапазон времени прихода
         if (range!=null){
             strobject.timerange[0]=range;
         }
@@ -62,7 +62,7 @@ window.onload= function() {
         $("#strpanel tr:not(:has(th))").remove();
     }
 
-    function loadstr() {            //Показать параметры сохраненной стратегии
+    function loadstr() {            //Вывести параметры сохраненной стратегии в таблицу
         cleartable();
         let chosenone = strobject[$strlist.val()];
         for (let i=0; i<Object.keys(chosenone).length; i++){
@@ -147,7 +147,7 @@ window.onload= function() {
         });}
     }
 
-    function Cancel(){
+    function Cancel(){   //Отменить изменения
         $strlist.empty();
         $.getJSON('strategies.json', function(json) {  //Получение файла strategies.json
             AllStrList = json.AllStrategies;
@@ -163,7 +163,7 @@ window.onload= function() {
         });
     }
 
-    function newlay(file){
+    function newlay(file){    //Открыть окно редактирования правил/приветственного текста
         var docHeight = $(document).height();
         $("body").append("<div id='overlay'></div>");
         $overlay = $("#overlay")
@@ -218,7 +218,7 @@ window.onload= function() {
         $("body").append($block);
 
 
-        function senddata() {
+        function senddata() {  //Сохранить введенный текст
             file = $btnok.attr('file');
         if (file == 'Rules'){
             Rules = $txt.val();
@@ -253,7 +253,7 @@ window.onload= function() {
     $straddbtn.click(addstr);   //Добавление стратегии на клик
     $strdelbtn.click(delstr);   //Удаление стратегии на клик
     $strsavebtn.click(SaveToJSON);  //Сохранение изменений и перезапись файла json на клик
-    $Use.click(function(){
+    $Use.click(function(){   //Добавление в "Используемые стратегии"
         if ($(this).is(':checked')){
             UsedStrList.push($strlist.val());
             console.log(UsedStrList);
@@ -263,7 +263,7 @@ window.onload= function() {
             }
         }
     });
-    $OnlyYou.click(function () {
+    $OnlyYou.click(function () {   //Добавление в "Использовать только эту стратегию"
         if ($(this).is(':checked')){
             if (strobject.OnlyYou.length>0) {
                 strobject.OnlyYou.pop();
@@ -275,32 +275,32 @@ window.onload= function() {
             strobject.OnlyYou.pop();
         }
     });
-    $btnname.click(function () {
+    $btnname.click(function () {   //Переименовать
     changename(prompt("Введите новое имя", $('#strlist option:selected').html()))
     });
-    $Cancel.click(function () {
+    $Cancel.click(function () {    //Отменить изменения
     if (confirm('Вы уверены, что хотите сбросить все изменения?')){
        Cancel();
     }
     });
-    $agreement.click(function () {
+    $agreement.click(function () { //Приветствие
     newlay('Agreement');
     });
 
-    $timezone.click(function () {
+    $timezone.click(function () {  //Границы прихода
       changetimezone(prompt("Введите минимальное время прихода").replace(':', ""),
           prompt("Введите максимальное время прихода").replace(':', ""));
     });
 
-      $timerange.click(function () {
+      $timerange.click(function () {  //Диапазон прихода
         changetimerange(prompt("Введите диапазон времени прихода"));
     });
 
-    $rules.click(function () {
+    $rules.click(function () {   //Правила
     newlay('Rules');
     });
 
-    $getdata.click(function () {
+    $getdata.click(function () {  //Получить данные из базы данных
         $.ajax({
             url:"getdata.php",
             success: function (get) {
@@ -311,7 +311,7 @@ window.onload= function() {
         });
     });
 
-    $cleandata.click(function () {
+    $cleandata.click(function () {  //Очистить базу данных
         if (confirm('Вы уверены, что хотите очистить базу данных? \n Отменить действие невозможно')){
             $.ajax({
                 url:"cleardata.php",
